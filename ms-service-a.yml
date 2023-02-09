@@ -30,6 +30,6 @@ configs:
             # Ignore 4xx exceptions.
             - org.springframework.web.client.HttpClientErrorException
         instances:
-            lookupAccount:
+            aInformation:
                 baseConfig: default
 
