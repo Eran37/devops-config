@@ -11,3 +11,20 @@ spring:
 service:
   b:
     url: http://ms-service-b/service/b
+
+
+# resilience4j config
+resilience4j:
+  circuitbreaker:
+    instances:
+      menu-service:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 1
+        slidingWindowSize: 10
+        waitDurationInOpenState: 2s
+        slidingWindowType: COUNT_BASED
+
