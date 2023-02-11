@@ -13,3 +13,35 @@ service:
     url: http://ms-service-b/service/b
 
 
+resilience4j:
+
+  circuitbreaker:
+    instances:
+      aInformation:
+          registerHealthIndicator: true
+          eventConsumerBufferSize: 10
+          failureRateThreshold: 50
+          minimumNumberOfCalls: 5
+          automaticTransitionFromOpenToHalfOpenState: 3
+          slidingWindowType: COUNT_BASED
+          recordExceptions:
+            - org.springframework.web.client.HttpServerErrorException
+            - java.io.IOException
+            - org.springframework.web.client.ResourceAccessException
+          ignoreExceptions:
+            - com.jb.msservicea.exceptions.CustomException
+  
+  retry:
+    instances: 
+      aInformation:
+        registerHealthIndicator: true
+        maxRetryAttempts: 5
+        waitDuration: 10s
+  
+  rateLimiter:
+    instances: 
+      aInformation:
+        registerHealthIndicator: false
+        limitForPeriod: 10
+        limitRefresheriod: 10s
+        timeoutDuration: 3s
